@@ -44,7 +44,6 @@ Use this strict JSON format for each question:
   "Option C": "string",
   "Option D": "string",
   "Answer": "A|B|C|D",
-  "Source": "article URL"
 }
 
 News Articles:
