@@ -28,14 +28,16 @@ async function fetchRSS() {
   return items.slice(0, 10); // take top 10 articles
 }
 
-// Function: Generate quiz questions
-async function generateQuiz() {
-  const articles = await fetchRSS();
-
+// Function: Generate a single question for one article
+async function generateQuestionForArticle(article) {
   const prompt = `
 You are a quiz generator. 
-Create 10 multiple choice questions (4 options each) from today's news.
-Use this strict JSON format for each question:
+Create **one multiple-choice question** (4 options) based on the following news article:
+
+Title: ${article.title}
+Description: ${article.description}
+
+Use this JSON format:
 
 {
   "Question": "string",
@@ -43,28 +45,42 @@ Use this strict JSON format for each question:
   "Option B": "string",
   "Option C": "string",
   "Option D": "string",
-  "Answer": "A|B|C|D",
+  "Answer": "A|B|C|D"
 }
-
-News Articles:
-${articles.map(a => `- ${a.title}: ${a.link}`).join("\n")}
 `;
 
-  const response = await openai.chat.completions.create({
-    model: "gpt-4o-mini",
-    messages: [{ role: "user", content: prompt }],
-    temperature: 0.7
-  });
-
-  let quiz;
   try {
-    quiz = JSON.parse(response.choices[0].message.content);
+    const response = await openai.chat.completions.create({
+      model: "gpt-4o-mini",
+      messages: [{ role: "user", content: prompt }],
+      temperature: 0.7
+    });
+
+    let quizItem = JSON.parse(response.choices[0].message.content);
+    // Attach the source URL from RSS feed
+    quizItem.Source = article.link;
+    return quizItem;
   } catch (e) {
-    console.error("Failed to parse AI response:", e);
-    quiz = [];
+    console.error("❌ Failed to generate question for article:", article.title, e);
+    return null;
+  }
+}
+
+// Function: Generate quiz for all articles
+async function generateQuiz() {
+  const articles = await fetchRSS();
+  const quiz = [];
+
+  for (let i = 0; i < articles.length; i++) {
+    console.log(`📰 Generating question for article ${i + 1}: ${articles[i].title}`);
+    const question = await generateQuestionForArticle(articles[i]);
+    if (question) quiz.push(question);
   }
 
-  fs.writeFileSync(QUIZ_FILE, JSON.stringify({ date: new Date().toISOString().split("T")[0], questions: quiz }, null, 2));
+  fs.writeFileSync(
+    QUIZ_FILE,
+    JSON.stringify({ date: new Date().toISOString().split("T")[0], questions: quiz }, null, 2)
+  );
   console.log("✅ Quiz generated for today");
 }
 
