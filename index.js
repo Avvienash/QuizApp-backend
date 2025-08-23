@@ -31,11 +31,11 @@ async function fetchRSS() {
 // Function: Check if content contains inappropriate material
 function containsInappropriateContent(quizItem) {
   const inappropriateKeywords = [
-    'violence', 'violent', 'crime', 'criminal', 'sexual', 'sex', 'rape', 'raped', 
-    'murder', 'murdered', 'kill', 'killed', 'death', 'dead', 'terrorism', 'terrorist',
-    'child abuse', 'abuse', 'assault', 'attack', 'shooting', 'stabbing', 'robbery',
-    'kidnap', 'torture', 'bomb', 'explosion', 'drugs', 'trafficking', 'suicide',
-    'harassment', 'blackmail', 'fraud', 'scam', 'embezzlement', 'corruption'
+    'sexual assault', 'rape', 
+    'murder', 'murdered', 'kill', 'killed', 'death', 'dead',
+    'child abuse', 'abuse', 'assault', 'shooting', 'stabbing',
+    'kidnap', 'torture', 'drugs', 'human trafficking', 'suicide',
+    'harassment',
   ];
 
   const textToCheck = [
@@ -46,8 +46,14 @@ function containsInappropriateContent(quizItem) {
     quizItem['Option D']
   ].join(' ').toLowerCase();
 
-  return inappropriateKeywords.some(keyword => textToCheck.includes(keyword));
+  const detectedWords = inappropriateKeywords.filter(keyword => textToCheck.includes(keyword));
+  
+  return {
+    hasInappropriateContent: detectedWords.length > 0,
+    detectedWords: detectedWords
+  };
 }
+
 
 // Function: Generate a single question for one article
 async function generateQuestionForArticle(article) {
@@ -137,15 +143,17 @@ async function generateQuiz() {
     const article = articles[articleIndex];
     console.log(`📰 Processing article ${articleIndex + 1}: ${article.title}`);
     
+    
     const question = await generateQuestionForArticle(article);
     
     if (question) {
       // Check if the generated question contains inappropriate content
-      if (containsInappropriateContent(question)) {
-        console.log(`⚠️  Skipping article ${articleIndex + 1}: Contains inappropriate content`);
+      const questionCheck = containsInappropriateContent(question);
+      if (questionCheck.hasInappropriateContent) {
+        console.log(`⚠️  Skipping article ${articleIndex + 1}: Generated question contains inappropriate content`);
         console.log(`📄 Article title: ${article.title}`);
         console.log(`❓ Generated question: ${question.Question}`);
-        console.log(`🔍 Options: A) ${question['Option A']}, B) ${question['Option B']}, C) ${question['Option C']}, D) ${question['Option D']}`);
+        console.log(`🔍 Detected words: ${questionCheck.detectedWords.join(', ')}`);
       } else {
         quiz.push(question);
         console.log(`✅ Added question ${quiz.length}/10 from article: ${article.title}`);
@@ -155,9 +163,7 @@ async function generateQuiz() {
     }
     
     articleIndex++;
-  }
-
-  if (quiz.length < 10) {
+  }  if (quiz.length < 10) {
     console.log(`⚠️  Only generated ${quiz.length} safe questions out of ${maxAttempts} articles processed`);
   }
 
