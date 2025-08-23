@@ -28,39 +28,6 @@ async function fetchRSS() {
   return items; // return all articles, we'll filter later
 }
 
-// Function: Shuffle options randomly and update the answer
-function shuffleOptions(quizItem) {
-  const options = [
-    { letter: 'A', text: quizItem['Option A'] },
-    { letter: 'B', text: quizItem['Option B'] },
-    { letter: 'C', text: quizItem['Option C'] },
-    { letter: 'D', text: quizItem['Option D'] }
-  ];
-
-  // Find the current correct answer text
-  const correctAnswerLetter = quizItem.Answer;
-  const correctAnswerText = quizItem[`Option ${correctAnswerLetter}`];
-
-  // Shuffle the options array
-  for (let i = options.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [options[i], options[j]] = [options[j], options[i]];
-  }
-
-  // Update the quiz item with shuffled options
-  quizItem['Option A'] = options[0].text;
-  quizItem['Option B'] = options[1].text;
-  quizItem['Option C'] = options[2].text;
-  quizItem['Option D'] = options[3].text;
-
-  // Find the new letter for the correct answer
-  const newCorrectAnswerIndex = options.findIndex(option => option.text === correctAnswerText);
-  const newCorrectAnswerLetter = ['A', 'B', 'C', 'D'][newCorrectAnswerIndex];
-  quizItem.Answer = newCorrectAnswerLetter;
-
-  return quizItem;
-}
-
 // Function: Check if content contains inappropriate material
 function containsInappropriateContent(quizItem) {
   const inappropriateKeywords = [
@@ -94,18 +61,22 @@ Description: ${article.description}
 IMPORTANT CONTENT GUIDELINES:
 - Only create questions about topics that are safe and appropriate for general audiences
 - Avoid questions about violence, crime, sexual content, child abuse, murder, rape, terrorism, or other disturbing content
+
+Create a question with exactly:
+- 1 CORRECT answer based on the article content
+- 3 WRONG answers that are plausible but incorrect
+
 Use this JSON format:
 
 {
   "Question": "string",
-  "Option A": "string",
-  "Option B": "string",
-  "Option C": "string",
-  "Option D": "string",
-  "Answer": "A|B|C|D"
+  "CorrectAnswer": "string",
+  "WrongAnswer1": "string", 
+  "WrongAnswer2": "string",
+  "WrongAnswer3": "string"
 }
 
-Ensure the the Answwer is randomly selected from the options A, B, C, or D.
+Make sure the correct answer is factually accurate based on the article, and the wrong answers are believable but incorrect.
 `;
 
   try {
@@ -115,13 +86,37 @@ Ensure the the Answwer is randomly selected from the options A, B, C, or D.
       temperature: 0.7
     });
 
-    let quizItem = JSON.parse(response.choices[0].message.content);
+    const aiResponse = JSON.parse(response.choices[0].message.content);
     
-    // Randomly shuffle the options and update the answer
-    quizItem = shuffleOptions(quizItem);
+    // Create array of all answers with the correct one marked
+    const answers = [
+      { text: aiResponse.CorrectAnswer, isCorrect: true },
+      { text: aiResponse.WrongAnswer1, isCorrect: false },
+      { text: aiResponse.WrongAnswer2, isCorrect: false },
+      { text: aiResponse.WrongAnswer3, isCorrect: false }
+    ];
     
-    // Attach the source URL from RSS feed
-    quizItem.Source = article.link;
+    // Shuffle the answers randomly
+    for (let i = answers.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [answers[i], answers[j]] = [answers[j], answers[i]];
+    }
+    
+    // Find which position the correct answer ended up in
+    const correctAnswerIndex = answers.findIndex(answer => answer.isCorrect);
+    const correctAnswerLetter = ['A', 'B', 'C', 'D'][correctAnswerIndex];
+    
+    // Create the final quiz item in the required format
+    const quizItem = {
+      "Question": aiResponse.Question,
+      "Option A": answers[0].text,
+      "Option B": answers[1].text,
+      "Option C": answers[2].text,
+      "Option D": answers[3].text,
+      "Answer": correctAnswerLetter,
+      "Source": article.link
+    };
+    
     return quizItem;
   } catch (e) {
     console.error("❌ Failed to generate question for article:", article.title, e);
