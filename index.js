@@ -143,6 +143,9 @@ async function generateQuiz() {
       // Check if the generated question contains inappropriate content
       if (containsInappropriateContent(question)) {
         console.log(`⚠️  Skipping article ${articleIndex + 1}: Contains inappropriate content`);
+        console.log(`📄 Article title: ${article.title}`);
+        console.log(`❓ Generated question: ${question.Question}`);
+        console.log(`🔍 Options: A) ${question['Option A']}, B) ${question['Option B']}, C) ${question['Option C']}, D) ${question['Option D']}`);
       } else {
         quiz.push(question);
         console.log(`✅ Added question ${quiz.length}/10 from article: ${article.title}`);
