@@ -1,6 +1,11 @@
 import OpenAI from "openai";
 import { XMLParser } from "fast-xml-parser";
-import sampleQuiz from './sampleQuiz.json' assert { type: "json" };
+import { readFileSync } from "fs";
+
+const sampleQuiz = JSON.parse(
+  readFileSync(new URL("./sampleQuiz.json", import.meta.url))
+);
+
 
 // OpenAI setup
 const openai = new OpenAI({
