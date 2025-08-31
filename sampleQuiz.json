@@ -1,0 +1,95 @@
+{
+          "date": "2025-08-30T23:45:38.638Z",
+          "questions": [
+                    {
+                              "Question": "What occasion is being celebrated in the article titled 'Happy National Day'?",
+                              "Option A": "National Day of Singapore",
+                              "Option B": "National Day of Indonesia",
+                              "Option C": "National Day of Malaysia",
+                              "Option D": "Independence Day of the United States",
+                              "Answer": "C",
+                              "Source": "https://www.thestar.com.my/news/nation/2025/08/31/happy-national-day"
+                    },
+                    {
+                              "Question": "What significant event does Malaysia celebrate on August 31st?",
+                              "Option A": "Labour Day",
+                              "Option B": "Independence Day",
+                              "Option C": "National Sports Day",
+                              "Option D": "National Day",
+                              "Answer": "D",
+                              "Source": "https://www.thestar.com.my/news/focus/2025/08/31/a-flying-start-to-national-day"
+                    },
+                    {
+                              "Question": "What is the main concern regarding the Indonesian government's plan to rewrite its history books?",
+                              "Option A": "It aims to promote national unity and patriotism.",
+                              "Option B": "It will improve the educational content for students.",
+                              "Option C": "It is intended to align history with international perspectives.",
+                              "Option D": "It may alter the collective memory and understanding of historical events.",
+                              "Answer": "D",
+                              "Source": "https://www.thestar.com.my/news/focus/2025/08/31/the-battle-over-memory"
+                    },
+                    {
+                              "Question": "What disease is Zanzibar targeting in its initiative to protect school-age children?",
+                              "Option A": "Tuberculosis",
+                              "Option B": "Urinary schistosomiasis",
+                              "Option C": "HIV/AIDS",
+                              "Option D": "Malaria",
+                              "Answer": "B",
+                              "Source": "https://www.thestar.com.my/news/world/2025/08/31/tanzania039s-zanzibar-steps-up-schistosomiasis-screening-to-protect-school-children"
+                    },
+                    {
+                              "Question": "What event led to the arrest of five people by British police in London?",
+                              "Option A": "A celebration of a recent legal victory regarding housing.",
+                              "Option B": "Masked men trying to force their way into a hotel used by asylum-seekers.",
+                              "Option C": "A peaceful protest against local government policies.",
+                              "Option D": "A demonstration supporting the rights of asylum-seekers.",
+                              "Answer": "B",
+                              "Source": "https://www.thestar.com.my/news/world/2025/08/31/uk-police-arrest-five-in-london-during-anti-asylum-protest"
+                    },
+                    {
+                              "Question": "What specific challenges did Namibian Prime Minister Elijah Ngurare pledge to address for rural development?",
+                              "Option A": "Lack of clean water, feeder roads, and digital connectivity",
+                              "Option B": "High unemployment rates and lack of housing",
+                              "Option C": "Environmental conservation and tourism development",
+                              "Option D": "Food scarcity and healthcare access",
+                              "Answer": "A",
+                              "Source": "https://www.thestar.com.my/news/world/2025/08/31/namibia-vows-to-bridge-rural-gaps-in-water-roads-digital-access"
+                    },
+                    {
+                              "Question": "What action did the U.S. take regarding semiconductor firms operating in China, which China opposed?",
+                              "Option A": "Increased tariffs on semiconductor imports from China.",
+                              "Option B": "Revoked the 'validated end-user' authorization for three companies.",
+                              "Option C": "Banned all semiconductor exports to China.",
+                              "Option D": "Sanctioned Chinese semiconductor manufacturers.",
+                              "Answer": "B",
+                              "Source": "https://www.thestar.com.my/news/world/2025/08/31/1st-ld-writethru-china-opposes-us-removal-of-semiconductor-firms-from-validated-end-user-list"
+                    },
+                    {
+                              "Question": "What significant financial assistance did Chancellor Friedrich Merz announce for municipalities?",
+                              "Option A": "Increased funding for public transportation by 50%",
+                              "Option B": "Tax cuts for local businesses starting immediately",
+                              "Option C": "A new national budget plan to reduce overall spending",
+                              "Option D": "Debt relief starting January 1, 2026",
+                              "Answer": "D",
+                              "Source": "https://www.thestar.com.my/news/world/2025/08/31/merz-promises-debt-relief-for-municipalities-ahead-of-electoral-test"
+                    },
+                    {
+                              "Question": "How many people were injured in the train accident in northwestern Egypt?",
+                              "Option A": "50",
+                              "Option B": "94",
+                              "Option C": "75",
+                              "Option D": "120",
+                              "Answer": "B",
+                              "Source": "https://www.thestar.com.my/news/world/2025/08/31/3-killed-94-injured-in-train-accident-in-nw-egypt"
+                    },
+                    {
+                              "Question": "What is the European Union planning to examine regarding frozen Russian assets?",
+                              "Option A": "Returning them to Russia as a peace offering",
+                              "Option B": "Confiscating them immediately for humanitarian aid",
+                              "Option C": "Using them to fund Ukraine's defence and reconstruction after the war",
+                              "Option D": "Investing them in EU infrastructure projects",
+                              "Answer": "C",
+                              "Source": "https://www.thestar.com.my/news/world/2025/08/31/eu-to-work-on-using-frozen-russian-assets-to-aid-ukraine-after-war"
+                    }
+          ]
+}
