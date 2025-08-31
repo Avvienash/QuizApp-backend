@@ -1,6 +1,6 @@
 import OpenAI from "openai";
 import { XMLParser } from "fast-xml-parser";
-import sampleQuiz from './sampleQuiz.json';
+import sampleQuiz from './sampleQuiz.json' assert { type: "json" };
 
 // OpenAI setup
 const openai = new OpenAI({
