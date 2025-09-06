@@ -8,6 +8,7 @@
   },
   "dependencies": {
     "cors": "^2.8.5",
+    "dotenv": "^17.2.2",
     "express": "^4.19.2",
     "fast-xml-parser": "^4.3.3",
     "openai": "^4.0.0"
